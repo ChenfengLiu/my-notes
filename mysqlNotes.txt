@@ -1,0 +1,33 @@
+////////////////////////////////////////////////////////////////////////////////////
+//mySQL commands
+////////////////////////////////////////////////////////////////////////////////////
+
+//access the MySQL shell:
+mysql -u root -p
+
+//show databases:
+SHOW DATABASES;
+
+//show processlist:
+show processlist;
+
+//show status:
+show status;
+
+//create database:
+CREATE DATABASE dbName;
+
+//delete database:
+DROP DATABASE dbName;
+
+//open up the database:
+USE name;
+
+//show tables in the database:
+SHOW tables;
+
+//show table structure:
+DESCRIBE tableName;
+
+//show everything in table:
+SELECT * FROM tableName;

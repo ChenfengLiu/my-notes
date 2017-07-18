@@ -1,0 +1,50 @@
+step1:
+	git init
+	git clone http://..... (default remote branch: origin/master)
+	git clone -o gitRemote http://...... (remote branch: gitRemote/master)
+
+check remote branch list/information:
+	git remote
+	git remote -v
+	git remote show
+
+add/remove remote branch:
+	git remote add new_remote_name http://...
+	git remote remove old_remote_name
+
+	git fetch origin (fetch remote branches)
+
+
+get local branch up-to-date:
+	git fetch origin
+
+merge:
+	git checkout master
+	git merge local_branch_name
+
+remote branch sync with master:
+	git checkout local_branch_name
+	git merge master
+	git push origin remote_branch_name
+
+view list of commits:
+	git log
+
+view list of local branches:
+	git branch -vv
+
+view branches avaliable for checkout:
+	git branch -v -a
+
+checkout a remote branch after fetch:
+	git checkout -b new_local_branch remote_name(origin)/remote_branch_name
+
+remove directory or file from git repository without deleting it from local:
+	git rm --cached file.file
+	git rm --cached -r directory
+
+Fork: sync with upstream:
+	git remote add upstream https://github.com/...
+	git fetch upstream
+	git checkout master
+	git merge upstream/master

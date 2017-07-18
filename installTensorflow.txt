@@ -1,0 +1,121 @@
+
+
+#################################################################################
+#1. install Docker
+#################################################################################
+**Set up the repository**
+1. Install packages to allow apt to use a repository over HTTPS:
+
+$ sudo apt-get install -y --no-install-recommends \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+
+2. Add Docker’s official GPG key:
+
+$ curl -fsSL https://apt.dockerproject.org/gpg | sudo apt-key add -
+
+3. Use the following command to set up the stable repository.
+
+$ sudo add-apt-repository \
+       "deb https://apt.dockerproject.org/repo/ \
+       ubuntu-$(lsb_release -cs) \
+       main"
+
+**Install Docker**
+1. Update the apt package index.
+
+$ sudo apt-get update
+
+2. Install the latest version of Docker.
+
+$ sudo apt-get -y install docker-engine
+
+3. Verify that docker is installed correctly by running the hello-world image.
+
+$ sudo docker run hello-world
+
+#################################################################################
+#2. install and Running the TF image
+#################################################################################
+1. Start a terminal using Terminal.app.
+
+docker run -it gcr.io/tensorflow/tensorflow:latest-devel
+
+2. Testing all installations
+
+python
+
+# python
+
+import tensorflow as tf
+hello = tf.constant('Hello, TensorFlow!')
+sess = tf.Session()
+print(sess.run(hello))
+
+#If you see "Hello, Tensorflow!", it works!
+
+#################################################################################
+#3. Retrieving the images
+#################################################################################
+1. ctrl-D if you're still in Docker and then:
+
+cd $HOME
+mkdir tf_files
+cd tf_files
+curl -O http://download.tensorflow.org/example_images/flower_photos.tgz
+tar xzf flower_photos.tgz
+
+
+2. Optional: if can't wait for 30min of training.
+
+# At your normal prompt, not inside Docker
+# reduce the number of categories. (left roses and daisies)
+
+cd $HOME/tf_files/flower_photos
+rm -rf dandelion sunflowers tulips
+
+3. Start Docker with local files available
+
+XXXXXXXXXXXXXXXXXXXXXXXXsudo docker run -it -v $HOME/tf_files:/tf_files  gcr.io/tensorflow/tensorflow:latest-devel
+
+
+**USE THIS!!!!!! Modify this below:
+sudo docker run -it -v /home/chenfeng/Documents/tf_files:/tf_files  gcr.io/tensorflow/tensorflow:latest-devel
+
+ls /tf_files/
+# Should see: flower_photos  flower_photos.tgz
+
+4. Retrieving the training code
+
+cd /tensorflow
+git pull 	
+
+#Your sample code will now be in /tensorflow/tensorflow/examples/image_retraining/.
+
+#################################################################################
+#4. (Re)training Inception
+#################################################################################
+1. Start your image retraining with one big command:
+
+# In Docker
+python tensorflow/examples/image_retraining/retrain.py \
+--bottleneck_dir=/tf_files/bottlenecks \
+--how_many_training_steps 500 \
+--model_dir=/tf_files/inception \
+--output_graph=/tf_files/retrained_graph.pb \
+--output_labels=/tf_files/retrained_labels.txt \
+--image_dir /tf_files/flower_photos
+
+2. run the Python file you created, first on a daisy:
+
+#in Docker
+python /tf_files/label_image.py /tf_files/flower_photos/daisy/21652746_cc379e0eea_m.jpg
+
+
+
+
+
+
+

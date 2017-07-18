@@ -1,0 +1,25 @@
+/////////////////////////////////////////////////////////////////////////////////
+//Build Tensorflow into Android Studio
+/////////////////////////////////////////////////////////////////////////////////
+
+//source:
+https://github.com/tensorflow/tensorflow/tree/master/tensorflow/contrib/makefile
+
+1. clone the above repo
+
+2. download all dependencies with provided script
+
+tensorflow/contrib/makefile/download_dependencies.sh
+
+//Building on Linux (ubuntu)
+
+1. check required packages are installed:
+
+sudo apt-get install autoconf automake libtool curl make g++ unzip zlib1g-dev \
+git python
+
+2. run script to compile:
+
+tensorflow/contrib/makefile/build_all_linux.sh
+
+

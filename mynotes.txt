@@ -1,0 +1,57 @@
+//////////////////////////////////////////////////////////////////////
+Remove trash:
+cd /home/chenfeng/.local/share/Trash/files; sudo rm -r *;
+//////////////////////////////////////////////////////////////////////
+mysql server:
+mysql -u root -p
+mysql -hxxx.xxx.xxx.xxx -uroot -p
+mysql -h mysql.cs.iastate.edu -usrname -passwd
+mysql -h hostname -u username -p database
+
+$servername = "mysql.cs.iastate.edu";
+$username = "XXXX";
+$password = "XXXX";
+IP: 
+my IP: 
+
+show processlist;
+show status;
+//////////////////////////////////////////////////////////////////////
+launch android studio 2.0:
+cd software/software2/androidStudio2/android-studio/bin/; ./studio.sh
+//////////////////////////////////////////////////////////////////////
+stop all service:
+sudo /etc/init.d/apache2 stop
+sudo /etc/init.d/mysql stop
+sudo /etc/init.d/proftpd stop
+sudo /opt/lampp/lampp start
+//////////////////////////////////////////////////////////////////////
+xampp:
+sudo /opt/lampp/lampp start
+sudo /opt/lampp/lampp stop
+sudo /opt/lampp/lampp status
+
+check lampp php version:
+sudo /opt/lampp/bin/php -v
+//////////////////////////////////////////////////////////////////////
+Open file browser as root:
+sudo nautilus
+//////////////////////////////////////////////////////////////////////
+Add virtual host:
+sudo a2ensite site_N.com
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+Connect to ISU http server:
+ssh chenfeng@proj-XXX-XX.cs.iastate.edu
+
+start: $ sudo service httpd start
+stop: $ sudo service httpd stop
+status: $ sudo service httpd status
+
+/etc/httpd/conf (main config directory)
+/var/www/html (Default DocumentRoot Folder) 
+
+copy file to server:
+ scp /home/chenfeng/Documents/myapp/phpfiles/login.php chenfeng@proj-XXX-XX.cs.iastate.edu:/var/www/html/
+
+
