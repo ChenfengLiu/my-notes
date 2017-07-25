@@ -1,0 +1,32 @@
+///////////////////////////////////////////////////////////
+//install, update, and uninstall
+///////////////////////////////////////////////////////////
+
+//install, update
+sudo dpkg -i atom-amd64.deb
+sudo apt-get -f install
+
+//uninstall:
+sudo apt remove --purge atom
+
+
+///////////////////////////////////////////////////////////
+//commands
+///////////////////////////////////////////////////////////
+
+//open command palette
+ctrl-shift-p
+
+//install package, go to preferences
+ctrl-,
+
+//beautify
+ctrl-shift-b
+
+//atom live server
+ctrl-alt-l: launch live server on port 3000.
+
+ctrl-alt-q: stop live server.
+
+ctrl-alt-3: launch live server on port 3000.
+

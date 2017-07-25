@@ -1,0 +1,13 @@
+//create project
+meteor create simple-todos
+
+cd simple-todos
+meteor
+go to: http://localhost:3000
+
+//Use angular, remove Blaze first
+meteor remove blaze-html-templates
+meteor add angular-templates
+//Add NPM packages
+meteor npm install --save angular angular-meteor
+
