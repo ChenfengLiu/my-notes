@@ -1,2 +1,2 @@
 # my-notes
-my notes for everything I did
+my notes for "almost" everything I have done.
