@@ -1,0 +1,57 @@
+Google Cloud Platform
+source: https://www.coursera.org/learn/gcp-fundamentals/home/week/1
+
+services:
+	Compute: App, Container, Compute Engine
+	Storage: Bigtable, Cloud Storage, Cloud SQL, Cloud Datastore
+	Big Data: BigQuery, Pub/Sub, Dataflow, Dataproc, Datalab
+	Machine Learning: Vision API, Machine Learning, Speech API, Translate API
+
+/////////////////////////////////////////////////////////////////////////////////
+//AppEngine
+/////////////////////////////////////////////////////////////////////////////////
+features:
+1. AppEngine automatically creates new instances when application is busy.
+2. No load balancer needed to be configured.
+3. AppEngine automatically turns off instances when applicaiton is not busy.
+4. AppEngine also manages the hardware and networking infrastructure.
+
+/////////////////////////////////////////////////////////////////////////////////
+//ComputeEngine vs. AppEngine 
+/////////////////////////////////////////////////////////////////////////////////
+1. Iaas vs. Paas
+2. Pay for allocation vs. Pay for usage of services
+
+
+/////////////////////////////////////////////////////////////////////////////////
+//AppEngine Standard Environment
+/////////////////////////////////////////////////////////////////////////////////
+features:
+1. Provides runtimes specifically for Java, Python, PHP, and GO (in sandbox containers).
+2. Not be able to write to local file system.
+3. 3rd-party software installation limit.
+4. Each service can be run in different versions (for A/B testing).
+
+workflow:
+1. Develop & test your web applications.
+2. Deploy to AppEngine with SDK.
+3. AppEngine will take care the rest.
+
+/////////////////////////////////////////////////////////////////////////////////
+//AppEngine Flexible Environment
+/////////////////////////////////////////////////////////////////////////////////
+features:
+1. Provides preconfigured Docker containers that support Node.js, Ruby, or custom runtimes.
+2. Pay for the Compute Engine VMs.
+3. Support for 3rd-party softwares.
+4. Customizable stack.
+5. Scaling takes more time (minutes instead of milliseconds).
+
+/////////////////////////////////////////////////////////////////////////////////
+//Cloud Datastore
+/////////////////////////////////////////////////////////////////////////////////
+features:
+1. NoSQL database (schemaless, stores entities in which have properties with values).
+2. Can have different entities for different instances.
+3. Supports ACID (atomicity, consistency, isolation, and durability) transactions.
+4. Can be accessed through any RESTful interface.

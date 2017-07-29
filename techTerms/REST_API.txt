@@ -1,0 +1,21 @@
+Representational State Transfer:
+
+http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm
+
+Features:
+1. Resource-based
+2. Six Constraints:
+	Uniform interface
+	Stateless
+	Client-server
+	Cacheable
+	Layered system
+	Code on demand
+3. REST constraints allows:
+	Scalability
+	Simplicity
+	Modifiability
+	Visibility
+	Portability
+	Reliability
+

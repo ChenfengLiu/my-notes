@@ -1,0 +1,135 @@
+GCP Networking 101
+
+source:https://codelabs.developers.google.com/codelabs/cloud-networking-101/index.html?index=..%2F..%2Findex#0
+
+Objective:
+1. How to measure latency between Google Compute Engine regions and zones
+2. How to test network connectivity and performance using open source tools
+3. How to set up up basic firewalling to secure your networks
+4. How to set up a global HTTP Load Balancer with Managed Instance Groups to automatically scale your resources up and down based on request load
+5. How to test and monitor your HTTP Load Balancer setup
+
+/////////////////////////////////////////////////////////////////
+//GCP shell
+/////////////////////////////////////////////////////////////////
+
+//show auth accounts:
+gcloud auth list
+
+//show list projects:
+gcloud config list project
+
+//set project:
+gcloud config set project <PROJECT_ID>
+
+//copy files to local environment:
+gsutil cp gs://networking101/* .
+
+//create the initial deployment:
+gcloud deployment-manager deployments create networking101  \
+--config networking-lab.yaml
+
+**This command sets up the environment consisting of one network with 
+**five subnetworks in different regions 
+**and five Debian VMs in those subnetworks. 
+**Some basic networking tools are also pre-installed by the deployment manager script.
+
+//update deployment:
+gcloud deployment-manager deployments update networking101 \
+--config ~/project-dir/networking-lab.yaml
+
+/////////////////////////////////////////////////////////////////
+//Check latency between VMs
+/////////////////////////////////////////////////////////////////
+Under ideal conditions, the latency would be limited by the ideal speed of light in fiber, which is roughly 202562 km/s or or 125866 miles/s. (Actual reachable speed is still a bit lower than that).
+
+You can estimate the length of the fiber either by distance as the crow flies (straight line) or by land transport. You have to multiply the result by two to account for a round trip.
+
+example:
+
+VM 1: e1-vm (Berkeley County, South Carolina)
+
+VM 2: eu1-vm (St. Ghislain, Belgium)
+
+Distance as the crow flies: 6837.20km
+
+Ideal latency: 6837.20 km / 202562 km/s * 1000 ms/s * 2 = 67.51 ms
+
+Observed latency: 93.40 ms (minimum counts)
+
+/////////////////////////////////////////////////////////////////
+//ping
+1. ping -i0.2 w2-vm
+ #(sends a ping every 200ms)
+
+2. sudo ping -i0.05 w2-vm -c 1000
+ #(sends a ping every 50ms, 1000 times)
+
+3. sudo ping -f -i0.05 w2-vm
+ #(flood ping, adds a dot for every sent packet, and removes one for every received packet)  - careful with flood ping without interval, it will send packets as fast as possible, which within the same zone is very fast
+
+4. sudo ping -i0.05 w2-vm -c 100 -s 1400
+ #(send larger packets, does it get slower?)
+
+
+/////////////////////////////////////////////////////////////////
+//Google Cloud Load Balancing (Global)
+/////////////////////////////////////////////////////////////////
+1. Add an HTTP firewalling rule allowing network access to the Backend VM instances
+
+gcloud compute firewall-rules create nw101-allow-http \
+--allow tcp:80 --network networking101 --source-ranges 0.0.0.0/0 \
+--target-tags http-server
+
+2. Create Managed Instance Groups with the VM instance configurations
+
+gcloud compute instance-templates create "us-east1-template" \
+--subnet "us-east1" \
+--metadata "startup-script-url=gs://networking101-lab/startup.sh" \
+--region "us-east1" \
+--tags "http-server"
+
+gcloud compute instance-templates create "europe-west1-template" \
+--subnet "europe-west1" \
+--metadata "startup-script-url=gs://networking101-lab/startup.sh" \
+--region "europe-west1" \
+--tags "http-server"
+
+gcloud compute instance-templates list
+
+"-> Compute Engine -> Instance groups -> create instance group"
+
+gcloud compute instance-groups list
+
+3. Create the HTTP Load Balancer with backends to route requests to available instances
+
+"-> Network Services -> Load Balancing -> my-gclb -> monitoring"
+
+//simulate 250 concurrent users in Siege:
+siege -c 250 http://<http-loadbalancer-ip>
+
+
+/////////////////////////////////////////////////////////////////
+//Cleanup
+/////////////////////////////////////////////////////////////////
+1. Delete load balancer (UI)
+2. Delete Managed Instance Groups
+
+gcloud compute instance-groups managed delete us-east1-mig \
+--region=us-east1
+gcloud compute instance-groups managed delete europe-west1-mig \
+--region=europe-west1
+
+3. Delete Instance Templates
+
+gcloud compute instance-templates delete us-east1-template
+gcloud compute instance-templates delete europe-west1-template
+
+4. Delete manually created firewall rule:
+
+gcloud compute firewall-rules delete nw101-allow-http
+
+5. Delete the automatically created deployment (with the networks and subnetworks):
+
+gcloud deployment-manager deployments delete networking101
+
