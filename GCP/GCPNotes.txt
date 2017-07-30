@@ -55,3 +55,14 @@ features:
 2. Can have different entities for different instances.
 3. Supports ACID (atomicity, consistency, isolation, and durability) transactions.
 4. Can be accessed through any RESTful interface.
+
+
+/////////////////////////////////////////////////////////////////////////////////
+//Google Container Engine
+/////////////////////////////////////////////////////////////////////////////////
+features(advantages):
+1. simple and consistent deployment.
+2. fast boot speed.
+3. portable.
+
+
