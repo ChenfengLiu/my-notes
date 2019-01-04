@@ -1,0 +1,32 @@
+//create project
+meteor create simple-todos
+
+//run the app
+cd simple-todos
+meteor
+go to: http://localhost:3000
+
+//Use angular, remove Blaze first
+meteor remove blaze-html-templates
+meteor add angular-templates
+//Add NPM packages
+meteor npm install --save angular angular-meteor
+
+
+
+
+/////////////////////////////////////////////////////////////////////
+//Collections and Schemas
+/////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////
+//Android
+/////////////////////////////////////////////////////////////////////
+meteor install-sdk android
+
+meteor add-platform android
+//meteor remove-platform android
+
+meteor run android
+meteor run android-device

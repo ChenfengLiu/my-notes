@@ -1,0 +1,17 @@
+1. Meteor is a full-stack framework for building JS apps.
+2. Meteor Build Tool is what compiles, runs, deploys, and publishes all of your
+Meteor apps and packages.
+3. Meteor Build Tool = Grunt, Gulp, Webpack, Browserify, Nodemon, Babel,
+UglifyJS...
+
+Use import and export
+1. Meteor allows you to import JavaScript, CSS, and HTML
+
+***There are two kinds of exports:
+named exports (several per module) and default exports (one per module)
+
+Example:
+```export const listRenderHold = LaunchScreen.hold();  // named export
+```export { Todos };                                   // named export
+```export default Lists;                               // default export
+```export default new Collection('lists');             // default export

@@ -1,0 +1,217 @@
+Mis:
+confirm('click OK to continue!');
+prompt("What is your name?");
+console.log(3>5);
+"wonderful day".length;
+"wonderful day".substring(4,7);
+
+///////////////////////////////////////////////////////////////////////
+function:
+var greeting = function (name) {
+    console.log("Great to see you," + " " + name);
+};
+
+// call the greeting function!
+greeting("Chenfeng");
+
+///////////////////////////////////////////////////////////////////////
+loop:
+for (var counter = 1; counter < 6; counter++) {
+	console.log(counter);
+}
+-----------------------------------------------------------------------
+var coinFace = Math.floor(Math.random() * 2);
+
+while(coinFace === 0){
+	console.log("Heads! Flipping again...");
+	var coinFace = Math.floor(Math.random() * 2);
+}
+console.log("Tails! Done flipping.");
+-----------------------------------------------------------------------
+var loopCondition = false;
+
+do {
+	console.log("I'm gonna stop looping 'cause my condition is " + loopCondition + "!");	
+} while (loopCondition);
+
+///////////////////////////////////////////////////////////////////////
+array:
+var junkData = ["Eddie Murphy", 49, "peanuts", 31];
+console.log(junkData[3]);
+------------------------------------------------------------------------
+splice:
+array.splice(start)
+array.splice(start, deleteCount)
+array.splice(start, deleteCount, item1, item2, ...)
+myFish.splice(2, 0, 'drum'); // insert 'drum' at 2-index position
+
+///////////////////////////////////////////////////////////////////////
+switch:
+switch(lunch){
+  case 'sandwich':
+    console.log("Sure thing! One sandwich, coming up.");
+    break;
+  default:
+    console.log("Huh! I'm not sure what " + lunch + " is. How does a sandwich sound?");
+}
+
+///////////////////////////////////////////////////////////////////////
+objects:
+var phonebookEntry = {};
+
+phonebookEntry.name = 'Oxnard Montalvo';
+phonebookEntry.number = '(555) 555-5555';
+phonebookEntry.phone = function() {
+  console.log('Calling ' + this.name + ' at ' + this.number + '...');
+};
+
+phonebookEntry.phone();
+------------------------------------------------------------------------
+var myObject = {
+    key: value,
+    key: value,
+    key: value
+};
+
+//create new object
+var myObj = new myObject();
+//add value
+myObj["name"] = "Charlie";
+myObj.name = "Charlie";
+
+var someObj = {propName: someValue};
+var myProperty = "propName";
+someObj[myProperty];
+------------------------------------------------------------------------
+typeof:
+var someObject = {someProperty: someValue};
+console.log( typeof someObject );
+------------------------------------------------------------------------
+hasOwnProperty:
+console.log( myObj.hasOwnProperty('name') ); // should print true
+------------------------------------------------------------------------
+constructor:
+function Cat(age, color) {
+  this.age = age;
+  this.color = color;
+}
+
+function Rectangle(height, width) {
+  this.height = height;
+  this.width = width;
+  this.calcArea = function() {
+      return this.height * this.width;
+  };
+  // put our perimeter function here!
+  
+}
+------------------------------------------------------------------------
+property:
+for(var property in dog) {
+  console.log(property);
+}
+------------------------------------------------------------------------
+prototype:
+className.prototype.newMethod =
+function() {
+statements;
+};
+
+function Dog (breed) {
+  this.breed = breed;
+};
+
+// here we make buddy and teach him how to bark
+var buddy = new Dog("golden Retriever");
+Dog.prototype.bark = function() {
+  console.log("Woof");
+};
+buddy.bark();
+------------------------------------------------------------------------
+inherit:
+function Penguin(name) {
+    this.name = name;
+    this.numLegs = 2;
+}
+
+// create your Emperor class here and make it inherit from Penguin
+function Emperor(name){
+    this.name = name;
+}
+Emperor.prototype = new Penguin();
+// create an "emperor" object and print the number of legs it has
+var emperor = new Emperor("emeem");
+console.log(emperor.numLegs);
+------------------------------------------------------------------------
+prototype chain:
+// original classes
+function Animal(name, numLegs) {
+    this.name = name;
+    this.numLegs = numLegs;
+    this.isAlive = true;
+}
+function Penguin(name) {
+    this.name = name;
+    this.numLegs = 2;
+}
+function Emperor(name) {
+    this.name = name;
+    this.saying = "Waddle waddle";
+}
+
+// set up the prototype chain
+Penguin.prototype = new Animal();
+Emperor.prototype = new Penguin();
+
+------------------------------------------------------------------------
+private method:
+function Person(first,last,age) {
+   this.firstname = first;
+   this.lastname = last;
+   this.age = age;
+   var bankBalance = 7500;
+  
+   var returnBalance = function() {
+      return bankBalance;
+   };
+       
+   // create the new function here
+   this.askTeller = function(){
+       return returnBalance;
+   };
+}
+
+var john = new Person('John','Smith',30);
+console.log(john.returnBalance);
+var myBalanceMethod = john.askTeller();
+var myBalance = myBalanceMethod();
+console.log(myBalance);
+var myEmperor = new Emperor("Jules");
+
+------------------------------------------------------------------------
+object array:
+var family = new Array();
+family[0] = new Person("alice", 40);
+family[1] = new Person("bob", 42);
+family[2] = new Person("michelle", 8);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

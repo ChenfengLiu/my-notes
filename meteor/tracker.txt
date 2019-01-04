@@ -1,0 +1,60 @@
+***Building a User Interface with Transparent Reactive Programming
+Using libarary that already has Tracker support.
+
+
+
+
+///////////////////////////////////////////////////////////////////
+***To empower an variable as a reactive value.
+
+///////////////////////////////////////////////////////////////////
+example:
+
+var favfood = "apples";
+var favfooddep = new Tracker.Dependency;
+
+var getFavFood = function () {
+	favfooddep.depend();
+	return favfood;
+}
+
+var setFavFood = function (newfavfood) {
+	favfood = newfavfood;
+	favfooddep.changed();
+}
+
+
+------------------------------------------
+var handel = Tracker.autorun(function () {
+	console.log(getFavFood());
+});
+//"apples"
+
+setFavFood("mangoes");
+//"mangoes"
+
+handle.stop();
+setFavoriteFood("cake");
+// (nothing printed)
+///////////////////////////////////////////////////////////////////
+
+***Autoruns can make arbitrary blocks of JavaScript code reactive.
+
+///////////////////////////////////////////////////////////////////
+example:
+
+var getReversedFood = function () {
+  return getFavoriteFood().split("").reverse().join("");
+};
+getReversedFood();
+// "ekac"
+
+var handle = Tracker.autorun(function () {
+  console.log("Your favorite food is " + getReversedFood() + " when reversed");
+});
+// Your favorite food is ekac when reversed
+///////////////////////////////////////////////////////////////////
+
+
+
+

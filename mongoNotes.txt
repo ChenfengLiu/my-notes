@@ -1,0 +1,34 @@
+Terms:
+
+1. MongoDB is "nonstructured" database.
+	-- NoSQL uses collections (of documents) to store data.
+	-- data is represented as "key value pairs".
+2. Structured (or relational) example: Structured Query Language (SQL)
+	-- SQL uses tables to store data.
+
+3. NoSQL: Not only SQL
+
+///////////////////////////////////////////////////////////////////////////////
+show dbs
+show collections
+show users
+show roles
+show profile
+show databases
+
+///////////////////////////////////////////////////////////////////////////////
+query:
+db.collection_name.find(<query>)
+
+coll = db.users;
+coll.find( { name: "Joe" } );
+
+///////////////////////////////////////////////////////////////////////////////
+count:
+db.collection_name.count()
+
+///////////////////////////////////////////////////////////////////////////////
+error:
+db.getLastError()
+db.getLastErrorobj()
+

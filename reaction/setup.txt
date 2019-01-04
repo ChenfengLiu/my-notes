@@ -1,0 +1,9 @@
+npm install -g reaction-cli
+
+reaction init
+cd reaction
+npm install babel-preset-env --save-dev
+meteor npm install --save bcrypt
+
+
+reaction run
