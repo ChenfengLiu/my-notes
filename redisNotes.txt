@@ -1,0 +1,13 @@
+#Start the Redis Service
+
+sudo systemctl start redis
+
+#Check that the service had no errors by running:
+
+sudo systemctl status redis
+
+#Test the Redis Instance Functionality
+
+redis-cli
+
+ping

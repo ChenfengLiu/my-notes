@@ -1,0 +1,23 @@
+#########################################################
+# kill all running containers with 
+docker kill $(docker ps -q)
+
+# delete all stopped containers with 
+docker rm $(docker ps -a -q)
+
+# delete all images with 
+docker rmi $(docker images -q)
+
+#########################################################
+# Build & Run docker image
+
+sudo docker image build -t XXX_XXX .
+sudo docker run -it XXX_XXX:latest
+
+#########################################################
+# Push docker image to GCR
+sudo docker build -t YOUR_IMAGE_NAME:latest .
+   
+docker tag YOUR_IMAGE_NAME:latest gcr.io/YOUR_PROJECT_NAME/YOUR_IMAGE_NAME:latest
+   
+docker push gcr.io/YOUR_PROJECT_NAME/YOUR_IMAGE_NAME:latest

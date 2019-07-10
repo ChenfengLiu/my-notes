@@ -1,4 +1,74 @@
 ////////////////////////////////////////////////////////////////////////////////////
+//Useful commands
+////////////////////////////////////////////////////////////////////////////////////
+
+//Show Column Configurations:
+SHOW FULL COLUMNS FROM your_table_name;
+
+//Set table to uft8 charset:
+ALTER TABLE your_table_name CONVERT TO CHARACTER SET utf8;
+
+//Show database flags:
+SHOW VARIABLES;
+
+//To duplicate a mysql table, including indexes and data
+CREATE TABLE new_table LIKE old_table;
+INSERT INTO new_table SELECT * FROM old_table;
+
+//Delete all data from a table
+DELETE FROM your_table_name;
+//or
+TRUNCATE TABLE your_table_name;
+
+// disable safe delete
+USE DB_NAME;
+SET SQL_SAFE_UPDATES = 0;
+DELETE from XXX_YOUR_TABLE_NAME;
+ALTER TABLE XXX_YOUR_TABLE_NAME AUTO_INCREMENT = 1;
+SET SQL_SAFE_UPDATES = 1;
+
+SET FOREIGN_KEY_CHECKS=0;
+SET FOREIGN_KEY_CHECKS=1;
+
+ALTER TABLE t_lti_link DROP INDEX link_sha256;
+SHOW INDEX FROM t_lti_link;
+ALTER TABLE t_lti_link ADD UNIQUE(link_sha256, context_id)
+
+
+// mysql dump one table
+// 1. create a bucket
+gsutil mb -p XXX-public-api -l us-central1 gs://historical_stock_price_backup
+// 2.
+gcloud sql instances describe XXX-development-mysql
+// 3.
+gsutil acl ch -u XXXX@gcp-sa-cloud-sql.iam.gserviceaccount.com:W gs://XXX_BACKUP
+// 4.
+gcloud sql export sql XXX-development-mysql gs://XXX_BACKUP/sqldumpfile.gz \
+--database=DB_NAME --table=TABLE_NAME
+// 5.
+gsutil acl ch -d XXX@gcp-sa-cloud-sql.iam.gserviceaccount.com gs://XXX_BACKUP
+
+gsutil acl ch -u XXX@gcp-sa-cloud-sql.iam.gserviceaccount.com:W gs://XXX_BACKUP
+
+gsutil acl ch -u XXX@gcp-sa-cloud-sql.iam.gserviceaccount.com:R gs://XXX_BACKUP/sqldumpfile.gz
+
+gcloud sql import sql MYSQL_SERVER_NAME gs://XXX_BACKUP/sqldumpfile.gz --database=DB_NAME
+
+//Rename
+RENAME TABLE XXX TO YYY;
+
+
+// Add timestamp column to table
+ALTER TABLE YOUR_DB.YOUR_TABLE
+ADD COLUMN timestamp BIGINT(20) AFTER XXX_COLUMN;
+
+UPDATE YOUR_DB.YOUR_TABLE SET `timestamp` = UNIX_TIMESTAMP(`DATETIME_COLUMN_NAME`);
+
+// update column name
+ALTER TABLE YOUR_DB.YOUR_TABLE change column `OLD_COLUMN` `NEW_COLUMN` varchar(225);
+
+
+////////////////////////////////////////////////////////////////////////////////////
 //mySQL commands
 ////////////////////////////////////////////////////////////////////////////////////
 
@@ -31,3 +101,28 @@ DESCRIBE tableName;
 
 //show everything in table:
 SELECT * FROM tableName;
+
+
+
+mysqldump --databases db_name -h db_host_name -P port_number -u user -p > dump_file.sql
+
+
+mysqldump --set-gtid-purged=OFF --column-statistics=0 -h XXX.XXX.XXX.XXX -P 3306 -u root -p DB_NAME TABLE_NAME > FILE_NAME.sql
+
+
+
+////////////////////////////////////////////////////////////////////////////////////
+//check table sizes
+////////////////////////////////////////////////////////////////////////////////////
+
+SELECT TABLE_NAME, TABLE_SCHEMA, sum(DATA_LENGTH+INDEX_LENGTH)/pow(1024,2) 
+FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA 
+NOT IN ('PERFORMANCE_SCHEMA','INFORMATION_SCHEMA','SYS','MYSQL')
+group by TABLE_NAME, TABLE_SCHEMA; 
+
+DESCRIBE mysql.general_log;
+SELECT COUNT(*) FROM mysql.general_log;
+
+
+SELECT * FROM INFORMATION_SCHEMA.FILES WHERE TABLESPACE_NAME='innodb_temporary'\G
+

@@ -1,0 +1,104 @@
+gcloud container clusters get-credentials [CLUSTER_NAME]
+
+
+////////////////////////////////////////////////////////////////////////////////////
+//minikube
+////////////////////////////////////////////////////////////////////////////////////
+# Start minikube
+minikube start
+
+# Set docker env
+eval $(minikube docker-env)
+
+# Build image
+docker build -t foo:0.0.1 .
+
+# Run in minikube
+kubectl run hello-foo --image=foo:0.0.1 --image-pull-policy=Never
+
+# Check that it's running
+kubectl get pods
+
+
+
+////////////////////////////////////////////////////////////////////////////////////
+//Creating VPC-native clusters using alias IP addresses
+////////////////////////////////////////////////////////////////////////////////////
+
+//Step 1: Creating a subnetwork automatically
+gcloud container clusters create XXX-alias-ip --enable-ip-alias --create-subnetwork name=XXX-subnet --region us-central1
+
+//Step 2: Create a Secret to provide the MySQL username and password to the database.
+kubectl create secret generic XXX-credentials --from-file ./username.txt --from-file ./password.txt
+
+//Step 3: Update your pod configuration file with the following items:
+
+//Step 3.1: Provide the Cloud SQL instance's private IP address as the host address your application will use to access your database.
+Find Private IP on Cloud SQL -> Connections, Assign it to backend application config file.
+
+//Step 3.2: Provide the Secret you previously created to enable the application to log into the database.
+See deployment.yaml
+
+
+//Step 3.3: Bring up your Deployment using the Kubernetes manifest file.
+kubectl create -f deployment.yaml
+
+////////////////////////////////////////////////////////////////////////////////////
+//kubectl get secrets
+////////////////////////////////////////////////////////////////////////////////////
+
+// list all secrets
+kubectl get secrets
+
+// show your_secret_name yaml
+kubectl get secret your_secret_name -o yaml
+
+// create mysql secret
+kubectl create secret generic XXX-mysql-secret --from-literal=blah.blah.username=root --from-literal=blah.blah.password=XXXXXX
+
+
+////////////////////////////////////////////////////////////////////////////////////
+//kubectl context (current cluster)
+////////////////////////////////////////////////////////////////////////////////////
+
+kubectl config get-contexts                          # display list of contexts 
+kubectl config current-context			     # display the current-context
+kubectl config use-context my-cluster-name           # set the default context to my-cluster-name
+
+
+////////////////////////////////////////////////////////////////////////////////////
+//kubectl shutdown Nodes
+////////////////////////////////////////////////////////////////////////////////////
+
+
+List the nodes and get the <node-name> you want to drain or (remove from cluster)
+
+kubectl get nodes
+1) First drain the node
+
+kubectl drain <node-name>
+You might have to ignore daemonsets and local-data in the machine
+
+kubectl drain <node-name> --ignore-daemonsets --delete-local-data
+2) Edit instance group for nodes (Only if you are using kops)
+
+kops edit ig nodes
+Set the MIX and MAX size to whatever it is -1 Just save the file (nothing extra to be done)
+
+You still might see some pods in the drained node that are related to daemonsets like networking plugin, fluentd for logs, kubedns/coredns etc
+
+3) Finally delete the node
+
+kubectl delete node <node-name>
+4) Commit the state for KOPS in s3:
+
+kops update cluster --yes
+
+
+
+
+
+
+
+
+
