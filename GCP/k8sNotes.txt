@@ -1,5 +1,22 @@
 gcloud container clusters get-credentials [CLUSTER_NAME]
 
+////////////////////////////////////////////////////////////////////////////////////
+//kubectl context (current cluster)
+////////////////////////////////////////////////////////////////////////////////////
+
+kubectl config get-contexts                          # display list of contexts 
+kubectl config current-context			     # display the current-context
+kubectl config use-context my-cluster-name           # set the default context to my-cluster-name
+
+
+////////////////////////////////////////////////////////////////////////////////////
+//kubectl useful commands
+////////////////////////////////////////////////////////////////////////////////////
+// get nodes external ip addresses
+kubectl get nodes --selector=kubernetes.io/role!=master -o jsonpath={.items[*].status.addresses[?\(@.type==\"ExternalIP\"\)].address}
+
+// get nodes details
+kubectl get nodes -o wide
 
 ////////////////////////////////////////////////////////////////////////////////////
 //minikube
@@ -58,15 +75,6 @@ kubectl create secret generic XXX-mysql-secret --from-literal=blah.blah.username
 
 
 ////////////////////////////////////////////////////////////////////////////////////
-//kubectl context (current cluster)
-////////////////////////////////////////////////////////////////////////////////////
-
-kubectl config get-contexts                          # display list of contexts 
-kubectl config current-context			     # display the current-context
-kubectl config use-context my-cluster-name           # set the default context to my-cluster-name
-
-
-////////////////////////////////////////////////////////////////////////////////////
 //kubectl shutdown Nodes
 ////////////////////////////////////////////////////////////////////////////////////
 
@@ -93,12 +101,4 @@ kubectl delete node <node-name>
 4) Commit the state for KOPS in s3:
 
 kops update cluster --yes
-
-
-
-
-
-
-
-
 
